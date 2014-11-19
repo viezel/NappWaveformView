@@ -1,0 +1,17 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0.0
+apiversion: 2
+description: NappWaveformView
+author: Your Name
+license: Specify your license
+copyright: Copyright (c) 2014 by Your Company
+
+# these should not be edited
+name: NappWaveformView
+moduleid: dk.napp.waveformview
+guid: 436ac397-09b4-42fe-9bb0-79e09f69b591
+platform: iphone
+minsdk: 3.4.0.GA
