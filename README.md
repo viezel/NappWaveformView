@@ -102,6 +102,10 @@ email: mm@napp.dk
 twitter: @nappdev  
 
 
+## Credits
+
+Credits goes to William Entriken for making this possible.  https://github.com/fulldecent/FDWaveformView
+
 ## License
 	
 	The MIT License (MIT)
