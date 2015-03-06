@@ -36,7 +36,11 @@ view.addEventListener("willRender", function(e){
 view.addEventListener("didRender", function(e){
 	Ti.API.info(e);
 	
-	
+	// @kosso : 1.1.0 : Now also contains TiBlob data of the waveform image PNG.
+	var waveformImageBlob = e.waveformImageBlob;
+	// Save it as a file, use in an imageView, etc. 
+
+
 	// API test - Animate the progress
 	setTimeout(function(){
 		view.setProgressSamples({
@@ -49,6 +53,16 @@ view.addEventListener("didRender", function(e){
 	// store the total samples - once the audio file has been loaded
 	totalSamples = view.totalSamples();
 });
+
+// @kosso : 1.1.0 : Added 'change' event
+// Fires after a tap or pan gesture
+view.addEventListener("change", function(e){
+	Ti.API.info('Current progressSamples : '+e.progressSamples);
+
+	Ti.API.info(e);
+
+});
+
 
 win.add(view);
 

@@ -22,6 +22,8 @@
 @property (nonatomic) BOOL doesAllowStretchAndScroll;
 @property (nonatomic, copy) UIColor *wavesColor;
 @property (nonatomic, copy) UIColor *progressColor;
+@property (nonatomic, strong) UIImage *waveformImage;
+
 @end
 
 @protocol FDWaveformViewDelegate <NSObject>
@@ -30,4 +32,5 @@
 - (void)waveformViewDidRender:(FDWaveformView *)waveformView;
 - (void)waveformViewWillLoad:(FDWaveformView *)waveformView;
 - (void)waveformViewDidLoad:(FDWaveformView *)waveformView;
+- (void)waveformViewChanged:(FDWaveformView *)waveformView; // fired after a tap or pan
 @end

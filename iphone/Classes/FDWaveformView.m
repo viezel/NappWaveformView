@@ -291,6 +291,9 @@
     }
 
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+
+    _waveformImage = image;
+
     CGRect drawRect = CGRectMake(0, 0, image.size.width, image.size.height);
     [self.progressColor set];
     UIRectFillUsingBlendMode(drawRect, kCGBlendModeSourceAtop);
@@ -420,9 +423,8 @@
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)recognizer
 {
-    CGPoint point = [recognizer translationInView:self];
-    //NSLog(@"translation: %f", point.x);
-
+    CGPoint point = [recognizer locationInView:self];
+    
     if (self.doesAllowStretchAndScroll) {
         long translationSamples = (float)(self.zoomEndSamples-self.zoomStartSamples) * point.x / self.bounds.size.width;
         [recognizer setTranslation:CGPointZero inView:self];
@@ -432,10 +434,21 @@
             translationSamples = self.zoomEndSamples - self.totalSamples;
         _zoomStartSamples -= translationSamples;
         _zoomEndSamples -= translationSamples;
+
+        // NSLog(@"[INFO] PAN/STRETCH : %f", point.x);
+
         [self setNeedsDisplay];
         [self setNeedsLayout];
     } else if (self.doesAllowScrubbing) {
-        self.progressSamples = self.zoomStartSamples + (float)(self.zoomEndSamples-self.zoomStartSamples) * [recognizer locationInView:self].x / self.bounds.size.width;
+
+        self.progressSamples = self.zoomStartSamples + (float)(self.zoomEndSamples-self.zoomStartSamples) * point.x / self.bounds.size.width;
+
+        // NSLog(@"[INFO] PAN : %f", point.x);
+        // NSLog(@"[INFO] progressSamples : %lu", self.progressSamples);
+        // Fires change event
+        if ([self.delegate respondsToSelector:@selector(waveformViewChanged:)])
+            [self.delegate waveformViewChanged:self];
+
     }
     
     return;
@@ -444,7 +457,17 @@
 - (void)handleTapGesture:(UITapGestureRecognizer *)recognizer
 {
     if (self.doesAllowScrubbing) {
-        self.progressSamples = self.zoomStartSamples + (float)(self.zoomEndSamples-self.zoomStartSamples) * [recognizer locationInView:self].x / self.bounds.size.width;
+
+        CGPoint point = [recognizer locationInView:self];
+
+        self.progressSamples = self.zoomStartSamples + (float)(self.zoomEndSamples-self.zoomStartSamples) * point.x / self.bounds.size.width;
+
+        // NSLog(@"[INFO] TAP : %f", point.x);
+        // NSLog(@"[INFO] progressSamples : %lu", self.progressSamples);
+        // Fires change event
+        if ([self.delegate respondsToSelector:@selector(waveformViewChanged:)])
+            [self.delegate waveformViewChanged:self];
+
     }
 }
 
