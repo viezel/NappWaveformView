@@ -100,7 +100,11 @@
 - (void)waveformViewDidRender:(FDWaveformView *)waveformView
 {
     if([self.proxy _hasListeners:@"didRender"]){
-        [self.proxy fireEvent:@"didRender" withObject:@{ @"totalSamples": [NSNumber numberWithLong:waveformView.totalSamples] } propagate:YES];
+
+        // NSLog(@"[INFO] didRender waveformImage : %@", waveform.waveformImage);
+        // Also send back TiBlob of waveform.waveformImage : "waveformImageBlob"
+        [self.proxy fireEvent:@"didRender" withObject:@{ @"totalSamples": [NSNumber numberWithLong:waveformView.totalSamples], @"waveformImageBlob":[[TiBlob alloc] initWithImage:waveform.waveformImage] } propagate:YES];
+
     }
 }
 
@@ -118,6 +122,14 @@
     }
 }
 
+- (void)waveformViewChanged:(FDWaveformView *)waveformView
+{
+    // NSLog(@"[INFO] waveformViewChanged ");
+    if([self.proxy _hasListeners:@"change"]){
+        [self.proxy fireEvent:@"change" withObject:@{ @"progressSamples": [NSNumber numberWithLong:waveformView.progressSamples] } propagate:YES];
+
+    }
+}
 
 
 

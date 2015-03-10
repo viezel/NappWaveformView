@@ -82,12 +82,18 @@ Store the total samples - once the audio file has been loaded
 
 ## Events
 
-	willLoad, didLoad, willRender, didRender
+	willLoad, didLoad, willRender, didRender, change (added in 1.1.0 by @kosso)
 
 Use didRender for your custom logic - here the graph have been loaded and rendered. 
 
 ## Changelog
- 
+
+
+**v.1.1.0**  
+
+@Kosso : 1.1.0 : didRender event now contains `e.waveformImageBlob` TiBlob of the waveform image. 
+@Kosso : 1.1.0 : change event now contains current value of `e.progressSamples` after a tap or pan gesture.
+
 
 **v.1.0**  
 
